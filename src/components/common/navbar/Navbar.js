@@ -6,8 +6,8 @@ function Navbar() {
 
 
   return (
-    <nav className={`flex py-8 md:justify-evenly justify-between md:gap-24 md:px-auto font-bold text-lg items-center text-white default-font ${navbar ?"" : " px-4"}`}>
-      <Link to="/" className='md:text-3xl font-extrabold text-2xl'>GAMOLFLIP</Link>
+    <nav className={`flex pt-5 md:justify-evenly justify-between md:gap-24 md:px-auto font-bold text-base items-center text-white default-font ${navbar ?"" : " px-4"}`}>
+      <Link to="/" className='md:text-2xl font-extrabold text-2xl'>GAMOLFLIP</Link>
        <button onClick={() => setNavbar(!false)} className=" font-serif border p-2 rounded-md md:hidden flex items-end text-xs flex-col gap-1.5 outline-none  ">
          <span className='w-10 bg-white h-[1.5px]'></span>
          <span className='w-8 bg-white h-[1.5px]'></span>

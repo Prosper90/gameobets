@@ -45,11 +45,11 @@ function GameSection() {
     ]
 
     return (
-        <div className='relarive flex flex-col items-center justify-center'>
-           <img src="/WhatsApp Image 2023-04-20 at 23.21 1.png" className='h-44' alt=",ndsvnd" />
-     
-            <h1 className='game-font text-white text-lg font-bold'>I Like</h1>
-            <div className="flex md:my-10 mt-4 gap-10">
+        <div className=' flex flex-col items-center justify-center scroll-m-0 overflow-y-scroll h-[90vh] pt-16 scroll-smooth'>
+            <img src="/WhatsApp Image 2023-04-20 at 23.21 1.png" className='h-36' alt=",ndsvnd" />
+
+            <h1 className='game-font text-white text-base font-bold'>I Like</h1>
+            <div className="flex md:my-5 mt-4 gap-10">
 
                 <div className='w-full '>
                     <label className='containers '>
@@ -60,7 +60,7 @@ function GameSection() {
                             checked={selectedMode === 'heads'}
                             onChange={handleSwitch}
                         />
-                        <span className='checkmark text-lg md:text-2xl game-font'>
+                        <span className='checkmark text-lg md:text-base game-font'>
                             Heads
                         </span>
                     </label>
@@ -74,7 +74,7 @@ function GameSection() {
                             checked={selectedMode === 'tails'}
                             onChange={handleSwitch}
                         />
-                        <span className='checkmark text-center text-lg md:text-2xl game-font'>
+                        <span className='checkmark text-center text-lg md:text-base game-font'>
                             Tails
                         </span>
                     </label>
@@ -82,7 +82,7 @@ function GameSection() {
 
             </div>
 
-            <h1 className='game-font text-white text-lg font-bold mb-4 md:mb-10'>For</h1>
+            <h1 className='game-font text-white text-lg font-bold mb-4 md:mb-3'>For</h1>
 
             <div className="grid md:grid-cols-3 grid-cols-2">
 
@@ -98,7 +98,7 @@ function GameSection() {
                                     checked={selectedOption === eth.eth}
                                     onChange={handleOptionChange}
                                 />
-                                <span className='checkmark p-3 game-font text-xs md:text-sm'>
+                                <span className='checkmark p-3 game-font text-xs md:text-xs'>
                                     {eth.eth} {eth.currency}
                                 </span>
                             </label>
