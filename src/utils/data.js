@@ -1,32 +1,32 @@
 export const ethDataRegular = [
   {
     id: 1,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "0.01",
   },
   {
     id: 2,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "0.05",
   },
   {
     id: 3,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "0.10",
   },
   {
     id: 4,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "0.50",
   },
   {
     id: 5,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "0.75",
   },
   {
     id: 6,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "1.00",
   },
 ];
@@ -34,32 +34,17 @@ export const ethDataRegular = [
 export const ethDataWhales = [
   {
     id: 1,
-    currency: "BNB",
-    eth: "1",
+    currency: "ETH | BNB | MATIC",
+    eth: "3",
   },
   {
     id: 2,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "5",
   },
   {
     id: 3,
-    currency: "BNB",
+    currency: "ETH | BNB | MATIC",
     eth: "10",
-  },
-  {
-    id: 4,
-    currency: "BNB",
-    eth: "50",
-  },
-  {
-    id: 5,
-    currency: "BNB",
-    eth: "75",
-  },
-  {
-    id: 6,
-    currency: "BNB",
-    eth: "100",
   },
 ];

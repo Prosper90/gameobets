@@ -1,16 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import "./global.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter } from "react-router-dom";
+import { ThirdwebProvider } from "@thirdweb-dev/react";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+const chains = "binance";
+//919374fd368afc2f273210df7d6e66f9 ps_own
+const clientId = "9ec8fe1959510de35dbefa184240a8a9";
+
 root.render(
   <React.StrictMode>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <ThirdwebProvider activeChain={chains} clientId={clientId}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThirdwebProvider>
   </React.StrictMode>
 );
 

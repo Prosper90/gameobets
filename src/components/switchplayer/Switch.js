@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Switch({ playingas, SetPlayingas }) {
+  const [isChecked, setIsChecked] = useState(playingas === "whales");
   const changePlayAs = (type) => {
     SetPlayingas(type);
-    // type === "regular" ? SetPlayingas(type) : SetPlayingas("regular");
+    setIsChecked(type === "whales");
   };
 
   useEffect(() => {}, [playingas]);
@@ -16,7 +17,7 @@ export default function Switch({ playingas, SetPlayingas }) {
             playingas === "regular" && "text-[#fdc300]"
           }`}
         >
-          Regular
+          Normal
         </div>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,9 +35,8 @@ export default function Switch({ playingas, SetPlayingas }) {
       <label className="switch">
         <input
           type="checkbox"
-          onClick={() =>
-            changePlayAs(playingas === "regular" ? "whales" : "regular")
-          }
+          checked={isChecked}
+          onChange={() => changePlayAs(isChecked ? "regular" : "whales")}
         />
         <span
           className={playingas === "regular" ? "slider" : "slider active"}

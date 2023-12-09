@@ -144,7 +144,7 @@ code {
 
 /* When the checkbox is checked, add a blue background */
 .containers input:checked ~ .checkmark {
-  border: 1px solid #fdc300;
+  border: 1px solid #fff;
   color: #fff;
 }
 
@@ -169,25 +169,21 @@ code {
 /* my animation */
 
 #maincoin {
-  animation: spinningMotion 1s infinite linear;
-  transform-origin: 50% 50%;
+  animation: coinFlip 1s infinite linear;
+  transform-origin: center;
 }
 
-@keyframes spinningMotion {
-  0% {
-    transform: rotate(0) scale(1);
-  }
-  25% {
-    transform: rotate(90deg) scale(1.2); /* Adjust the angle and scale as needed */
-  }
-  50% {
-    transform: rotate(180deg) scale(1);
-  }
-  75% {
-    transform: rotate(270deg) scale(0.8);
-  }
+@keyframes coinFlip {
+  0%,
+  20%,
   100% {
-    transform: rotate(360deg) scale(1);
+    transform: rotateX(0deg);
+  }
+  60% {
+    transform: rotateX(180deg);
+  }
+  80% {
+    transform: rotateY(180deg);
   }
 }
 
@@ -201,7 +197,7 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fdc300;
+  background-color: #fff;
   border-radius: 10px;
 }
 
@@ -215,7 +211,7 @@ code {
 }
 
 ::-moz-scrollbar-thumb {
-  background-color: #fdc300;
+  background-color: #fff;
   border-radius: 10px;
 }
 
@@ -263,7 +259,7 @@ code {
 }
 
 .switch input:checked + .slider {
-  background-color: #fdc300;
+  background-color: #fff;
 }
 
 .switch input:focus + .slider {
@@ -273,3 +269,223 @@ code {
 .switch input:checked + .slider:before {
   transform: translateX(8em);
 }
+
+/* For card styles */
+
+.wallet {
+  --bg-color: #fff;
+  --bg-color-light: #f0e7ff;
+  --text-color-hover: #000;
+  --box-shadow-color: rgba(245, 252, 178, 0.48);
+}
+
+.card {
+  width: 220px;
+  height: 321px;
+  background: #000;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease-out;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.005) translateZ(0);
+  box-shadow: 0 24px 36px rgba(0, 0, 0, 0.11),
+    0 24px 46px var(--box-shadow-color);
+  color: #000;
+}
+
+.card:hover .overlay {
+  transform: scale(4) translateZ(0);
+}
+
+.card:hover .circle {
+  border-color: var(--bg-color-light);
+  background: var(--bg-color);
+}
+
+.card:hover .circle:after {
+  background: var(--bg-color-light);
+}
+
+.card:hover .type {
+  color: var(--text-color-hover);
+  font-size: 17px;
+}
+
+.card .type {
+  font-size: 17px;
+  color: #fff;
+  margin-top: 30px;
+  z-index: 1000;
+  transition: color 0.3s ease-out;
+}
+
+.card svg g {
+  stroke: #000;
+}
+
+.card:hover svg g {
+  stroke: #fff;
+}
+
+.card svg path {
+  stroke: #000;
+}
+
+.card:hover svg path {
+  stroke: #fff;
+}
+
+.circle {
+  width: 131px;
+  height: 131px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease-out;
+}
+
+.circle:after {
+  content: "";
+  width: 118px;
+  height: 118px;
+  display: block;
+  position: absolute;
+  background: var(--bg-color);
+  border-radius: 50%;
+  top: 7px;
+  left: 7px;
+  transition: opacity 0.3s ease-out;
+}
+
+.circle svg {
+  z-index: 10000;
+  transform: translateZ(0);
+}
+
+.overlay {
+  width: 118px;
+  position: absolute;
+  height: 118px;
+  border-radius: 50%;
+  background: var(--bg-color);
+  top: 70px;
+  left: 50px;
+  z-index: 0;
+  transition: transform 0.3s ease-out;
+}
+
+/* For Result */
+.cardResult {
+  width: 380px;
+  height: 220px;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 30px;
+  gap: 13px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 2px 2px 20px rgb(253, 224, 71);
+}
+
+#cookieSvg {
+  width: 50px;
+}
+
+#cookieSvg g path {
+  fill: rgb(97, 81, 81);
+}
+
+.cookieHeading {
+  font-size: 1.2em;
+  font-weight: 800;
+  color: #fff;
+}
+
+.cookieDescription {
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: 600;
+  color: rgb(99, 99, 99);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.acceptButton {
+  width: 80px;
+  height: 30px;
+  background-color: #7b57ff;
+  transition-duration: 0.2s;
+  border: none;
+  color: rgb(241, 241, 241);
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+.declineButton {
+  width: 80px;
+  height: 30px;
+  background-color: rgb(218, 218, 218);
+  transition-duration: 0.2s;
+  color: rgb(46, 46, 46);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+.declineButton:hover {
+  background-color: #ebebeb;
+  transition-duration: 0.2s;
+}
+
+.acceptButton:hover {
+  background-color: #9173ff;
+  transition-duration: 0.2s;
+}
+
+/*
+    "viem": "^1.4.2",
+    "wagmi": "^1.3.9",
+*/
+
+/* button nav */
+.button_nav {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  padding-left: 1.25rem !important;
+  padding-right: 1.25rem !important;
+  border-radius: 0.75rem !important;
+  border-width: 1px !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  white-space: nowrap !important;
+  background: #fff !important;
+  border-color: #fff !important;
+}
+/* button nav */

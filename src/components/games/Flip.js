@@ -6,7 +6,7 @@ import { ethDataRegular, ethDataWhales } from "../../utils/data";
 import Switch from "../switchplayer/Switch";
 import { ShopContext } from "../../utils/contextShop";
 
-function GameSection() {
+function Flip() {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedMode, setSelectedMode] = useState("");
   const [playingas, SetPlayingas] = useState("regular");
@@ -145,4 +145,4 @@ function GameSection() {
   );
 }
 
-export default GameSection;
+export default Flip;
