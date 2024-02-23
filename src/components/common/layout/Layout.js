@@ -16,16 +16,16 @@ function Layout({ children }) {
   const { notify, loader, setNotify, setNotifyType, setNotifyMsg, flipResult } =
     useContext(ShopContext);
   useEffect(() => {
-    if (!address) {
-      setNotify(true);
-      setNotifyType("warn");
-      setNotifyMsg("Please connect your wallet to proceed");
-      navigate("/");
-    }
+    // if (!address) {
+    //   setNotify(true);
+    //   setNotifyType("warn");
+    //   setNotifyMsg("Please connect your wallet to proceed");
+    //   navigate("/");
+    // }
   }, [address]);
 
   return (
-    <main className="bg-image h-full min-h-screen relative">
+    <main className="h-full min-h-screen relative bg-[#07001A]">
       <Navbar />
 
       {notify && <Notifiy />}

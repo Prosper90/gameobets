@@ -16,7 +16,7 @@ export const ShopContextProvider = (props) => {
   const address = useAddress();
   const chain = useChain();
 
-  //console.log(chain, "checking chain out");
+  // console.log(chain, "checking chain out");
 
   /* global BigInt */
 
@@ -25,7 +25,7 @@ export const ShopContextProvider = (props) => {
   const [leaderboard, setLeaderBoard] = useState();
   const [gottenDdata, setGottendata] = useState();
 
-  //motifiers
+  //notifiers
   const [notify, setNotify] = useState(false);
   const [notifyType, setNotifyType] = useState();
   const [notifyMsg, setNotifyMsg] = useState();
@@ -34,26 +34,38 @@ export const ShopContextProvider = (props) => {
   const [loaderActive, setloaderActive] = useState(false);
   const [confettiWin, setConfettiWin] = useState(false);
   const [confettiLoss, setConfettiLoss] = useState(false);
-  const [flipResult, setFlipResult] = useState(false);
+  const [gameResult, setGameResult] = useState(false);
   //logs
   const prevLog = useRef();
+  //playing as
+  const [playingas, SetPlayingas] = useState("regular");
+
+  //handling chain
+  const [selectedChainLocal, setSelectedChainLocal] = useState("");
+
+  //games data
+  const [selectedChoice, setSelectedChoice] = useState();
+  const [amount, setAmount] = useState(0);
+  const [winChance, setWinchance] = useState(0);
+  const [gametype, setGameType] = useState("");
 
   /* global BigInt */
 
-  const { contract } = useContract(ContractAddress);
-  const {
-    data: dataUsers,
-    isLoading: isLoadingself,
-    error: selfError,
-  } = useContractRead(contract, "self");
+  const { contract } = useContract(ContractAddress, contractABI);
+  // console.log(contract, "contract check");
+  // const {
+  //   data: dataUsers,
+  //   isLoading: isLoadingself,
+  //   error: selfError,
+  // } = useContractRead(contract, "self");
 
   const {
-    data: dataRecent,
+    data: dataHistory,
     isLoading: isLoadingRecent,
     error: errorRecent,
   } = useContractRead(contract, "gameTracker");
 
-  const { data: dataLeaders } = useContractRead(contract, "leaders");
+  // const { data: dataLeaders } = useContractRead(contract, "leaders");
 
   // const {
   //   data: dataFlipstat,
@@ -63,28 +75,29 @@ export const ShopContextProvider = (props) => {
   // } = useContractRead(contract, "getStatus");
 
   const {
-    mutateAsync: flipCoin,
+    mutateAsync: PlaceBet,
     isLoading: Flipload,
     error: flipError,
-  } = useContractWrite(contract, "flipTheCoin");
+  } = useContractWrite(contract, "placeBet");
 
   const handleEvent = (log) => {
     //console.log(log, log[0], log[0].args, "loggers checkers");
     prevLog.current = log;
     if (log[0]?.data?.player === address) {
-      setFlipResult(true);
-      if (log[0].data.isWin == true) {
+      console.log(log[0]?.data, "checking if I got the data correctly");
+      setGameResult(true);
+      if (log[0]?.data.status === 1) {
         console.log("in in in here win");
         setNotify(true);
         setNotifyType("success");
-        setNotifyMsg("Won the Flip");
+        setNotifyMsg("Game Won");
         setloaderActive(false);
         setConfettiWin(true);
       } else {
         console.log("in in in in here loss");
         setNotify(true);
         setNotifyType("warn");
-        setNotifyMsg("Lost the Flip");
+        setNotifyMsg("Game Lost");
         setloaderActive(false);
         setConfettiLoss(true);
       }
@@ -95,11 +108,11 @@ export const ShopContextProvider = (props) => {
     data: log,
     isLoading: loadingEvent,
     error: errorEvent,
-  } = useContractEvents(contract, "FlipCoinResult");
+  } = useContractEvents(contract, "BetResolved");
 
-  const flip = async (choice, selectedAmount, searchParams) => {
+  const play = async (searchParams) => {
     //check that user is registered
-    //console.log("Called buy");
+    console.log("Called buy", amount);
     if (!address) {
       setNotify(true);
       setNotifyType("warn");
@@ -107,32 +120,46 @@ export const ShopContextProvider = (props) => {
       return;
     }
 
+    console.log(Math.round(selectedChoice), Math.round(winChance), "wiw wiw ");
+
+
     try {
       setloaderActive(true);
       //const contractInstance =  await getContract();
 
       //const fees = ethers.utils.parseEther(String(inputValue));
-      const feepaid = (4 / 100) * parseFloat(selectedAmount);
+      const feepaid = (4 / 100) * parseFloat(amount);
       // console.log(
       //   feepaid,
       //   "Checking in me ",
       //   parseFloat(selectedAmount) + feepaid
       // );
-      const fees = ethers.utils.parseEther(String(parseFloat(selectedAmount)));
+      const fees = ethers.utils.parseEther(String(parseFloat(amount)));
       console.log(fees, "check oooooo in here");
+
+      // const textEncoder = new TextEncoder();
+      // const gameTypeencoded = textEncoder.encode(gametype);
+      const gameTypeencoded = ethers.utils.formatBytes32String("dice")
+
       const refValue =
         searchParams.get("address") !== null
           ? searchParams.get("address")
           : "0x0000000000000000000000000000000000000000";
 
-      await flipCoin({
-        args: [parseFloat(choice), refValue],
+      await PlaceBet({
+        args: [
+          Math.round(selectedChoice),
+          gameTypeencoded,
+          Math.round(winChance),
+          refValue,
+        ],
         overrides: {
           gasLimit: 1000000,
           value: fees, // send 0.1 native token with the contract call
         },
       });
     } catch (error) {
+      console.log(error, "error ini");
       setNotify(true);
       setNotifyType("warn");
       setNotifyMsg("User cancelled transaction");
@@ -142,7 +169,9 @@ export const ShopContextProvider = (props) => {
 
   //Useeffect
   useEffect(() => {
-    console.log(dataRecent, "datausers jjk dhjdjd");
+    if (selectedChainLocal === "" && address) {
+      setSelectedChainLocal(chain?.chain);
+    }
 
     if (notify) {
       setTimeout(() => {
@@ -155,7 +184,7 @@ export const ShopContextProvider = (props) => {
     if (log && log !== prevLog.current) {
       handleEvent(log);
     }
-  }, [notify, address, log]);
+  }, [notify, log]);
 
   const contextValue = {
     userData,
@@ -174,21 +203,31 @@ export const ShopContextProvider = (props) => {
     setLoading,
     loaderActive,
     setloaderActive,
-    dataUsers,
-    dataLeaders,
+    // dataUsers,
+    // dataLeaders,
     //dataFlipstat,
     //Flipstatloading,
     //Flipstatsuccess,
     //getstats,
-    flip,
+    play,
+    //for game populate data
+    setSelectedChoice,
+    setWinchance,
+    setAmount,
+    setGameType,
+    //end of for game data
     confettiWin,
     setConfettiWin,
     confettiLoss,
     setConfettiLoss,
-    flipResult,
-    setFlipResult,
+    gameResult,
+    setGameResult,
     chain,
-    dataRecent,
+    dataHistory,
+    playingas,
+    SetPlayingas,
+    selectedChainLocal,
+    setSelectedChainLocal,
   };
 
   return (

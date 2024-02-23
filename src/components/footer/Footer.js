@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   return (
-    <footer className="sticky top-[100vh] footer mb-0 w-full bottom-0 gap-5 flex flex-col md:flex-row justify-between md:items-center p-4 bg-gradient-to-r from-[#0F0F0F] to-[#000] text-white">
+    <footer className="sticky top-[100vh] footer mb-0 w-full bottom-0 gap-5 flex flex-col md:flex-row justify-between md:items-center p-4 bg-[#130D25] text-[#808792]">
       <div className=" flex gap-2 items-center">
         <img
           alt="Casino logo"
@@ -17,7 +17,7 @@ function Footer() {
         <p>Copyright Play Casino © 2022 - All rights reserved</p>
       </div>
       <div className="flex gap-4 mr-0 md:place-self-center justify-end">
-        <a href="https://twitter.com/@ethbets_">
+        <a href="https://twitter.com/@royalbets_">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 50 50"

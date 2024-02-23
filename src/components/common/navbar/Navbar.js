@@ -16,7 +16,7 @@ function Navbar({}) {
 
   return (
     <nav
-      className={`flex py-4 md:justify-between justify-between text-[#FFF] md:gap-24 md:px-auto to-[#0F0F0F] from-[#000] bg-gradient-to-br font-bold text-base items-center default-font px-4`}
+      className={`flex py-4 md:justify-between justify-between text-[#808792] md:gap-24 md:px-auto bg-[#130D25] font-bold text-base items-center default-font px-4`}
     >
       <button
         onClick={() => setNavbar(!false)}
@@ -31,7 +31,7 @@ function Navbar({}) {
         className="md:text-lg flex font-extrabold text-sm items-center gap-2"
       >
         <img className="h-10" src="/casino-logo.webp" alt="" />
-        <h1>Royal Bets</h1>
+        <h1 className="text-white">Royal Bets</h1>
       </Link>
       <ul
         className={`md:flex transition-all z-50 md:flex-row flex-col  justify-center md:h-auto md:relative border-2 md:border-none fixed top-20 md:top-0 md:left-8 left-4 py-8 md:py-0 bg-[#000] border-[#FFF] w-48 rounded-md  md:w-1/5 md:bg-transparent md:gap-10 items-start gap-4 pl-6 ${
@@ -97,7 +97,7 @@ function Navbar({}) {
         </div>
       </ul>
 
-      <div className="flex items-center justify-between gap-8">
+      <div className="flex items-center justify-between gap-8 relative">
         {/* <a href="https://twitter.com/@ethbets_">
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -1,45 +1,107 @@
 [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_minimumBet",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_subscriptionId",
+        "type": "uint64"
+      },
+      {
+        "internalType": "address",
+        "name": "_vrfCoordinator",
+        "type": "address"
+      }
+    ],
     "stateMutability": "payable",
     "type": "constructor"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "requestId",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "have",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "want",
+        "type": "address"
       }
     ],
-    "name": "FlipCoinRequest",
-    "type": "event"
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "requestId",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
         "name": "player",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "bool",
-        "name": "isWin",
-        "type": "bool"
+        "internalType": "uint256",
+        "name": "betAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "gameType",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "requestId",
+        "type": "uint256"
       }
     ],
-    "name": "FlipCoinResult",
+    "name": "BetPlaced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "player",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "betAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "gameType",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "requestId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum Games.BetStatus",
+        "name": "status",
+        "type": "uint8"
+      }
+    ],
+    "name": "BetResolved",
     "type": "event"
   },
   {
@@ -91,32 +153,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "FeeRequireMax",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "FeeRequireMin",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -124,17 +160,12 @@
         "type": "uint256"
       }
     ],
-    "name": "bettingDetails",
+    "name": "betsDetails",
     "outputs": [
       {
-        "internalType": "uint256",
-        "name": "BettingFee",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "randomWords",
-        "type": "uint256"
+        "internalType": "bytes32",
+        "name": "gameType",
+        "type": "bytes32"
       },
       {
         "internalType": "address",
@@ -142,163 +173,55 @@
         "type": "address"
       },
       {
-        "internalType": "bool",
-        "name": "isWin",
-        "type": "bool"
-      },
-      {
-        "internalType": "bool",
-        "name": "fullFilled",
-        "type": "bool"
-      },
-      {
         "internalType": "uint256",
-        "name": "id",
+        "name": "betAmount",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "time",
         "type": "uint256"
       },
-      {
-        "internalType": "enum FlipCoin.BetOptions",
-        "name": "input",
-        "type": "uint8"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_max",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_min",
-        "type": "uint256"
-      }
-    ],
-    "name": "changeBettingFee",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "_response",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "contractbalance",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "flipCoinOwner",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "enum FlipCoin.BetOptions",
-        "name": "selection",
-        "type": "uint8"
-      },
-      {
-        "internalType": "address",
-        "name": "_referral",
-        "type": "address"
-      }
-    ],
-    "name": "flipTheCoin",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "requestValue",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "uint256",
         "name": "requestId",
         "type": "uint256"
-      }
-    ],
-    "name": "getStatus",
-    "outputs": [
+      },
+      {
+        "internalType": "uint256",
+        "name": "winChance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "payout",
+        "type": "uint256"
+      },
+      {
+        "internalType": "enum Games.BetStatus",
+        "name": "status",
+        "type": "uint8"
+      },
       {
         "components": [
           {
             "internalType": "uint256",
-            "name": "BettingFee",
+            "name": "chosenNumber",
             "type": "uint256"
           },
           {
-            "internalType": "uint256",
-            "name": "randomWords",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "player",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isWin",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "fullFilled",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "enum FlipCoin.BetOptions",
+            "internalType": "enum Games.BetOptions",
             "name": "input",
+            "type": "uint8"
+          },
+          {
+            "internalType": "enum Games.GameState",
+            "name": "state",
             "type": "uint8"
           }
         ],
-        "internalType": "struct FlipCoin.flipCoinDetails",
-        "name": "",
+        "internalType": "struct Games.GameData",
+        "name": "gameData",
         "type": "tuple"
       }
     ],
@@ -307,19 +230,34 @@
   },
   {
     "inputs": [],
-    "name": "leaders",
+    "name": "cancelSubscription",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      }
+    ],
+    "name": "fund",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gameTracker",
     "outputs": [
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "BettingFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "randomWords",
-            "type": "uint256"
+            "internalType": "bytes32",
+            "name": "gameType",
+            "type": "bytes32"
           },
           {
             "internalType": "address",
@@ -327,32 +265,59 @@
             "type": "address"
           },
           {
-            "internalType": "bool",
-            "name": "isWin",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "fullFilled",
-            "type": "bool"
-          },
-          {
             "internalType": "uint256",
-            "name": "id",
+            "name": "betAmount",
             "type": "uint256"
           },
           {
             "internalType": "uint256",
-            "name": "amount",
+            "name": "time",
             "type": "uint256"
           },
           {
-            "internalType": "enum FlipCoin.BetOptions",
-            "name": "input",
+            "internalType": "uint256",
+            "name": "requestId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "winChance",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "payout",
+            "type": "uint256"
+          },
+          {
+            "internalType": "enum Games.BetStatus",
+            "name": "status",
             "type": "uint8"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "chosenNumber",
+                "type": "uint256"
+              },
+              {
+                "internalType": "enum Games.BetOptions",
+                "name": "input",
+                "type": "uint8"
+              },
+              {
+                "internalType": "enum Games.GameState",
+                "name": "state",
+                "type": "uint8"
+              }
+            ],
+            "internalType": "struct Games.GameData",
+            "name": "gameData",
+            "type": "tuple"
           }
         ],
-        "internalType": "struct FlipCoin.flipCoinDetails[]",
+        "internalType": "struct Games.Bet[]",
         "name": "",
         "type": "tuple[]"
       }
@@ -374,15 +339,69 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "minimumBet",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_requestId",
+        "name": "_selectedChoice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_gametype",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_winChance",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_referral",
+        "type": "address"
+      }
+    ],
+    "name": "placeBet",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "requestId",
         "type": "uint256"
       },
       {
         "internalType": "uint256[]",
-        "name": "_randomWords",
+        "name": "randomWords",
         "type": "uint256[]"
       }
     ],
@@ -411,58 +430,16 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "self",
-    "outputs": [
+    "inputs": [
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "BettingFee",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "randomWords",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "player",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isWin",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "fullFilled",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint256",
-            "name": "id",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "enum FlipCoin.BetOptions",
-            "name": "input",
-            "type": "uint8"
-          }
-        ],
-        "internalType": "struct FlipCoin.flipCoinDetails[]",
-        "name": "",
-        "type": "tuple[]"
+        "internalType": "uint256",
+        "name": "_minimumBet",
+        "type": "uint256"
       }
     ],
-    "stateMutability": "view",
+    "name": "setMinimumBet",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -479,8 +456,27 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "withdrawAllBalance",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawLink",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

@@ -8,9 +8,11 @@ import { BrowserRouter } from "react-router-dom";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const chains = "binance";
+//Its binance and binance-testnet
+const chains = "binance-testnet";
 //919374fd368afc2f273210df7d6e66f9 ps_own
-const clientId = "9ec8fe1959510de35dbefa184240a8a9";
+//mr matrick_own 9ec8fe1959510de35dbefa184240a8a9
+const clientId = "919374fd368afc2f273210df7d6e66f9";
 
 root.render(
   <React.StrictMode>
